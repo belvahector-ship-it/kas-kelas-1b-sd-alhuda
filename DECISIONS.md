@@ -272,6 +272,20 @@ GitHub Pages domain kustomnya. Sengaja disimpan sebagai file di repo, bukan hany
 lewat Settings → Pages, supaya pengaturannya ikut ter-versioning dan tidak hilang kalau
 Pages dinonaktifkan lalu diaktifkan lagi.
 
+**Terverifikasi setelah migrasi** (diuji dengan permintaan HTTP sungguhan, bukan dari
+tampilan panel):
+
+| Alamat diuji | Hasil |
+|---|---|
+| `http://kas-alhuda.my.id` | 200 → dialihkan ke `https://kas-alhuda.my.id/` |
+| `http://www.kas-alhuda.my.id` | 200 → dialihkan ke `https://kas-alhuda.my.id/` |
+| `https://kas-alhuda.my.id` | 200, konten benar |
+| `belvahector-ship-it.github.io/kas-kelas-1b-sd-alhuda/` (alamat lama) | 200 → dialihkan ke domain baru |
+| `https://kas-alhuda.my.id/robots.txt` | terlayani, `Disallow: /` utuh |
+
+Sertifikat Let's Encrypt terbit ±10 menit setelah DNS check lolos, lalu **Enforce HTTPS**
+diaktifkan sehingga `http://` selalu dipaksa ke `https://`.
+
 **Konsekuensi yang harus diikuti:** `OAUTH_CLIENT_ID` di Google Cloud Console harus
 memasukkan `https://kas-alhuda.my.id` pada **Authorized JavaScript origins**. Kalau tidak,
 mode edit akan gagal dengan `redirect_uri_mismatch` di domain baru meski berhasil di

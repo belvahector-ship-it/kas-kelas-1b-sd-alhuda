@@ -190,3 +190,29 @@ Ditulis terbuka, bukan didiamkan — rinciannya di `DECISIONS.md` CP-06:
 | Simpan gagal `403` | Akun belum diberi akses **Editor** di spreadsheet, atau **Google Sheets API** belum di-Enable |
 | Simpan gagal `404` | `SHEET_ID` salah, atau nama tab di `config.js` beda dengan di spreadsheet |
 | Angka tidak muncul saat dibuka | Halaman dibuka lewat `file://` — harus lewat server (lihat bagian paling atas) |
+| Browser memperingatkan "Not secure" di `kas-alhuda.my.id` | Sertifikat HTTPS belum terbit. Lihat bagian di bawah |
+
+## Catatan domain & HTTPS
+
+Situs dilayani GitHub Pages di domain `kas-alhuda.my.id` (terdaftar di IDwebhost).
+
+**DNS yang terpasang** (di IDwebhost → Domain → Kelola DNS):
+
+| Host | Tipe | Nilai |
+|---|---|---|
+| `@` | A | `185.199.108.153` |
+| `@` | A | `185.199.109.153` |
+| `www` | CNAME | `belvahector-ship-it.github.io` |
+
+`www.kas-alhuda.my.id` otomatis dialihkan ke `kas-alhuda.my.id`.
+
+**Sertifikat HTTPS** diterbitkan GitHub secara otomatis (Let's Encrypt) setelah DNS check
+selesai — biasanya beberapa menit, kadang sampai satu jam. Selama itu situs hanya bisa
+diakses lewat `http://`. Setelah sertifikat terbit, aktifkan centang **Enforce HTTPS** di
+*Settings → Pages* agar semua pengunjung dipaksa ke `https://`.
+
+**Kalau nanti mengganti domain lagi**, ada tiga tempat yang harus ikut diubah — melewatkan
+salah satunya adalah penyebab paling umum mode edit tiba-tiba rusak:
+1. File `CNAME` di root repo.
+2. *Settings → Pages → Custom domain* di GitHub.
+3. **Authorized JavaScript origins** di Google Cloud Console (OAuth).
