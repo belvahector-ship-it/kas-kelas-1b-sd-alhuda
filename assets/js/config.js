@@ -34,7 +34,7 @@ window.CONFIG = {
      Kosongkan array ini ([]) kalau ingin semua akun Google yang punya izin
      edit di spreadsheet otomatis boleh mengedit.                            */
   ADMIN_EMAILS: [
-    // 'bendahara1b@gmail.com',
+    'rahmapujirahayu309@gmail.com',   // Rahma Puji Rahayu — bendahara kelas 1B
   ],
 
   /* ---- Perilaku ---- */

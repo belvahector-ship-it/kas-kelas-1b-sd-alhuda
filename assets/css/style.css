@@ -485,6 +485,34 @@ tfoot td.sticky-l { background: var(--yellow); }
 .locked { border: var(--bw) dashed var(--ink); padding: var(--s5); text-align: center; background: repeating-linear-gradient(45deg, transparent 0 10px, rgba(11,11,11,.04) 10px 20px); }
 .locked p { font-size: var(--fs-sm); color: var(--ink-soft); }
 
+/* ---------- 13b. KARTU KONTAK BENDAHARA ---------- */
+.kontak {
+  display: flex; align-items: flex-start; gap: var(--s5);
+  background: var(--yellow);
+  border: var(--bw-thick) solid var(--ink);
+  box-shadow: var(--sh-lg);
+  padding: var(--s6);
+  max-width: 700px;
+}
+@media (max-width: 620px) { .kontak { flex-direction: column; gap: var(--s4); padding: var(--s5); } }
+
+.kontak__badge {
+  flex: none;
+  width: 74px; height: 74px;
+  display: grid; place-items: center;
+  font-size: 2.1rem; line-height: 1;
+  background: var(--paper-2);
+  border: var(--bw) solid var(--ink);
+  box-shadow: var(--sh-sm);
+  transform: rotate(-3deg);
+}
+.kontak__body { min-width: 0; }
+.kontak__nama { font-size: clamp(1.5rem, 4.5vw, 2.1rem); text-transform: uppercase; margin-top: var(--s3); line-height: 1.05; }
+.kontak__alias { font-weight: 700; color: var(--ink-soft); margin: .15rem 0 var(--s4); }
+.kontak__note { margin-bottom: var(--s5); max-width: 44ch; }
+.kontak__wa { width: 100%; max-width: 340px; }
+.kontak__hint { font-size: var(--fs-xs); color: var(--ink-soft); margin: var(--s2) 0 0; }
+
 /* ---------- 14. FOOTER ---------- */
 .footer { background: var(--ink); color: var(--paper); border-top: var(--bw-thick) solid var(--ink); padding-block: var(--s7) var(--s5); margin-top: var(--s8); }
 .footer h3 { font-size: var(--fs-h3); text-transform: uppercase; color: var(--yellow); }
@@ -493,6 +521,17 @@ tfoot td.sticky-l { background: var(--yellow); }
 .footer p { color: #C7C7C7; font-size: var(--fs-sm); }
 .footer a { color: var(--yellow); }
 .footer__bar { border-top: 2px solid #333; margin-top: var(--s6); padding-top: var(--s4); font-size: var(--fs-xs); color: #8E8E8E; display: flex; flex-wrap: wrap; gap: var(--s3); justify-content: space-between; }
+
+/* kredit pengelola web — paling bawah, sengaja kecil */
+.credit { border-top: 1px solid #2A2A2A; margin-top: var(--s4); padding-top: var(--s4); text-align: center; }
+.credit__line { font-size: .68rem; line-height: 1.7; color: #7E7E7E; margin: 0; letter-spacing: .02em; }
+.credit__line b { color: var(--yellow); font-weight: 700; }
+.credit__line a { color: #9A9A9A; text-decoration: none; border-bottom: 1px solid #444; }
+.credit__line a:hover { color: var(--yellow); border-bottom-color: var(--yellow); }
+.credit__line a b { color: var(--yellow); }
+.credit__contact { margin-top: .35rem; }
+/* Semua link kredit tetap diberi tinggi sentuh layak walau fontnya kecil. */
+.credit__line a { display: inline-block; padding: .35rem .15rem; }
 
 /* ---------- 15. TOAST & MODAL ---------- */
 #toasts { position: fixed; right: 1rem; bottom: 1rem; z-index: 400; display: grid; gap: .6rem; max-width: min(360px, calc(100vw - 2rem)); }
