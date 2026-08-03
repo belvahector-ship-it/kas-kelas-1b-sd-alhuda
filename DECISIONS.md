@@ -207,6 +207,36 @@ bertambah, ini yang pertama perlu ditinjau ulang.
 
 ---
 
+## 2026-08-03 · CP-08 — Privasi: nama lengkap siswa di halaman publik
+
+**Keputusan user:** halaman tetap menampilkan **nama lengkap** 28 siswa dan status
+tunggakan keluarganya, dan repo dipasang **publik** di GitHub Pages.
+
+**Risiko yang diangkat sebelum diputuskan:** halaman ini memasangkan nama anak kelas 1 SD
+dengan kondisi finansial keluarganya. Kalau terindeks mesin pencari, menelusuri nama anak
+bisa memunculkan fakta bahwa keluarganya menunggak. Itu jauh melampaui niat awalnya —
+transparansi ke sesama wali murid kelas — dan yang terdampak adalah pihak yang tidak
+pernah dimintai persetujuan.
+
+**Penyeimbang yang dipasang:**
+- `<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">` di `index.html`
+- `robots.txt` dengan `Disallow: /`
+
+Jadi halaman terbuka bagi siapa pun yang **punya tautannya**, tapi tidak muncul di hasil
+pencarian Google. Ini menutup jalur "orang asing menemukannya tanpa sengaja", bukan
+"orang yang punya tautan bisa membukanya".
+
+**Yang masih terbuka, supaya jelas:** siapa pun yang mendapat tautannya — dari grup
+WhatsApp yang di-forward, misalnya — bisa melihat semuanya. `noindex` adalah permintaan
+sopan yang dipatuhi Google dan Bing, bukan penguncian.
+
+**Kalau nanti berubah pikiran**, dua langkah yang paling murah:
+1. Tampilkan nama singkat di web (`Ahmad Abidzar Z. M.`) sementara spreadsheet tetap
+   lengkap — ubah di fungsi render tabel, tidak menyentuh sumber data.
+2. Jadikan repo private dan bagikan file HTML-nya langsung ke wali murid.
+
+---
+
 ## Cara menambah entri baru
 
 ```markdown

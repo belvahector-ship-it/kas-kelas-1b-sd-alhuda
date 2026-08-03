@@ -1,0 +1,5 @@
+# Halaman ini memuat nama siswa dan status pembayaran keluarganya.
+# Terbuka bagi siapa pun yang punya tautannya, tetapi tidak untuk diindeks
+# mesin pencari. Lihat DECISIONS.md CP-08.
+User-agent: *
+Disallow: /
