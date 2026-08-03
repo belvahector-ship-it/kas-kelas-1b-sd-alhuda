@@ -1,0 +1,623 @@
+{
+ "meta": {
+  "sekolah": "SD Islam Al Huda",
+  "kelas": "1B",
+  "tahunAjaran": "2026/2027",
+  "pagu": 15000,
+  "sumber": "snapshot",
+  "diperbarui": "2026-08-03"
+ },
+ "bulan": [
+  "JULI",
+  "AGUSTUS",
+  "SEPTEMBER",
+  "OKTOBER",
+  "NOVEMBER",
+  "DESEMBER",
+  "JANUARI",
+  "FEBRUARI",
+  "MARET",
+  "APRIL",
+  "MEI",
+  "JUNI"
+ ],
+ "siswa": [
+  {
+   "no": 1,
+   "nama": "Ahmad Abidzar Zavier Muchtar",
+   "pagu": 15000,
+   "bayar": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "row": 4
+  },
+  {
+   "no": 2,
+   "nama": "Arkadewi Candramaya Noor Alim",
+   "pagu": 15000,
+   "bayar": [
+    true,
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "row": 5
+  },
+  {
+   "no": 3,
+   "nama": "Aruna Divyanisa Inggitdhiarto",
+   "pagu": 15000,
+   "bayar": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "row": 6
+  },
+  {
+   "no": 4,
+   "nama": "Batara Sakha Langit",
+   "pagu": 15000,
+   "bayar": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "row": 7
+  },
+  {
+   "no": 5,
+   "nama": "Clarissa Greisy Putri Aliyana",
+   "pagu": 15000,
+   "bayar": [
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "row": 8
+  },
+  {
+   "no": 6,
+   "nama": "Elvano Radhika A P",
+   "pagu": 15000,
+   "bayar": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "row": 9
+  },
+  {
+   "no": 7,
+   "nama": "Eshal Faiha Abdillah Al Faqih",
+   "pagu": 15000,
+   "bayar": [
+    true,
+    true,
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "row": 10
+  },
+  {
+   "no": 8,
+   "nama": "Fathan Khairi Ramadhan",
+   "pagu": 15000,
+   "bayar": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "row": 11
+  },
+  {
+   "no": 9,
+   "nama": "Faza Nurul Alawiya",
+   "pagu": 15000,
+   "bayar": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "row": 12
+  },
+  {
+   "no": 10,
+   "nama": "Gifta Ataya Humairah",
+   "pagu": 15000,
+   "bayar": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "row": 13
+  },
+  {
+   "no": 11,
+   "nama": "Gilang Arwan Saputra",
+   "pagu": 15000,
+   "bayar": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    false,
+    false
+   ],
+   "row": 14
+  },
+  {
+   "no": 12,
+   "nama": "Hasbi Mulyo Raharjo",
+   "pagu": 15000,
+   "bayar": [
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "row": 15
+  },
+  {
+   "no": 13,
+   "nama": "Hasna Humaira",
+   "pagu": 15000,
+   "bayar": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "row": 16
+  },
+  {
+   "no": 14,
+   "nama": "Ibrahim Akmal Putra",
+   "pagu": 15000,
+   "bayar": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "row": 17
+  },
+  {
+   "no": 15,
+   "nama": "Kanya Tsabitha Rachman",
+   "pagu": 15000,
+   "bayar": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    false,
+    false
+   ],
+   "row": 18
+  },
+  {
+   "no": 16,
+   "nama": "Kyra Shireen Fahrozi",
+   "pagu": 15000,
+   "bayar": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "row": 19
+  },
+  {
+   "no": 17,
+   "nama": "Mahalul Himam Adzra",
+   "pagu": 15000,
+   "bayar": [
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "row": 20
+  },
+  {
+   "no": 18,
+   "nama": "Maira Hamidah Majid",
+   "pagu": 15000,
+   "bayar": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "row": 21
+  },
+  {
+   "no": 19,
+   "nama": "Nalendra Athar Alfari",
+   "pagu": 15000,
+   "bayar": [
+    true,
+    true,
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "row": 22
+  },
+  {
+   "no": 20,
+   "nama": "Nuha Azahra P",
+   "pagu": 15000,
+   "bayar": [
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "row": 23
+  },
+  {
+   "no": 21,
+   "nama": "Pangestu Damar",
+   "pagu": 15000,
+   "bayar": [
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "row": 24
+  },
+  {
+   "no": 22,
+   "nama": "Riviera Adreena Amalia",
+   "pagu": 15000,
+   "bayar": [
+    true,
+    true,
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "row": 25
+  },
+  {
+   "no": 23,
+   "nama": "Rizky Alif Putra",
+   "pagu": 15000,
+   "bayar": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "row": 26
+  },
+  {
+   "no": 24,
+   "nama": "Sabrina Salsabila Azzahra",
+   "pagu": 15000,
+   "bayar": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "row": 27
+  },
+  {
+   "no": 25,
+   "nama": "Syakira Aleysia Azis",
+   "pagu": 15000,
+   "bayar": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "row": 28
+  },
+  {
+   "no": 26,
+   "nama": "Syamitha Derina Salsabila",
+   "pagu": 15000,
+   "bayar": [
+    true,
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "row": 29
+  },
+  {
+   "no": 27,
+   "nama": "Uwais Muhammad Fatih",
+   "pagu": 15000,
+   "bayar": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "row": 30
+  },
+  {
+   "no": 28,
+   "nama": "Zahrotu Ulya",
+   "pagu": 15000,
+   "bayar": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "row": 31
+  }
+ ],
+ "pengeluaran": [
+  {
+   "bulan": "Juli",
+   "tanggal": 13,
+   "jumlah": 60000,
+   "keterangan": "Aqua Galon baru",
+   "row": 4
+  },
+  {
+   "bulan": "Juli",
+   "tanggal": 16,
+   "jumlah": 30000,
+   "keterangan": "tissue",
+   "row": 5
+  },
+  {
+   "bulan": "Juli",
+   "tanggal": 18,
+   "jumlah": 75000,
+   "keterangan": "pompa galoon miyako",
+   "row": 6
+  },
+  {
+   "bulan": "Juli",
+   "tanggal": 18,
+   "jumlah": 429000,
+   "keterangan": "lemari dan rak mukena",
+   "row": 7
+  },
+  {
+   "bulan": "Juli",
+   "tanggal": 25,
+   "jumlah": 161000,
+   "keterangan": "Doorprize",
+   "row": 8
+  }
+ ]
+}

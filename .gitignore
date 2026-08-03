@@ -1,0 +1,13 @@
+# file sumber Excel — data mentah, tidak perlu ikut ke repo publik
+*.xlsx
+*.xls
+
+# sampah OS & editor
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+.idea/
+
+# konfigurasi lokal harness
+.claude/

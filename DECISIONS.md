@@ -1,0 +1,217 @@
+# DECISIONS.md — Kas Kelas 1B SD Islam Al Huda
+
+Log keputusan proyek. **Append-only.** Kalau keputusan lama dibatalkan, tulis entri baru
+yang menggantikan — jangan hapus riwayatnya.
+
+---
+
+## 2026-08-03 · CP-01 — Discovery (dipadatkan)
+
+Permintaan user sudah cukup spesifik, jadi Discovery dipangkas jadi satu putaran.
+
+**Diketahui dari user:**
+- Web **statis, 1 halaman**, menampilkan data spreadsheet kas kelas.
+- Sumber data: Google Spreadsheet `1LVg64_HIVvZk2HReb08HB3LB-K_48qpqXxECAxca-Qo`
+  (isinya identik dengan file `DATA KAS KELAS 1B SD ISLAM AL HUDA.xlsx`).
+- Konsep meniru repo `belvahector-ship-it/kas-rt-sampangan` (portal transparansi kas).
+- **Login Gmail** untuk mengaktifkan mode edit/input data.
+- Desain **neo brutalist**.
+- **Full animasi scroll down**.
+- Dikerjakan cepat & efisien.
+
+**Asumsi yang diambil (belum dikonfirmasi user — silakan koreksi):**
+
+| # | Asumsi | Alasan |
+|---|---|---|
+| A1 | Bahasa UI **Indonesia penuh**, tanpa layer i18n | Audiens wali murid kelas 1 SD |
+| A2 | Pengunjung umum boleh **melihat** semua data tanpa login | Tujuannya transparansi, sama seperti repo referensi |
+| A3 | Yang boleh **mengedit** hanya bendahara/wali kelas | Login Gmail dipakai sebagai gerbang edit |
+| A4 | Nominal iuran seragam **Rp15.000/bulan/siswa** | Semua baris kolom "Pagu Iuran" = 15000 |
+| A5 | Tahun ajaran berjalan **Juli 2026 – Juni 2027** (12 bulan) | Header kolom di sheet |
+| A6 | Hosting **GitHub Pages** (statis, gratis) | User menyebut mau bikin repo git |
+| A7 | Tidak ada halaman lain (laporan/kegiatan terpisah) | User minta eksplisit "1 halaman saja" |
+
+**Verifikasi data (dihitung ulang dari Excel, bukan dari kolom total yang sudah ada):**
+- 28 siswa × 12 bulan; 161 sel terbayar → **pemasukan Rp2.415.000**
+- 5 transaksi pengeluaran → **Rp755.000**
+- **Saldo Rp1.660.000** → cocok dengan kolom `Net` baris terakhir di sheet `REKAP KAS`. Data konsisten.
+
+**Catatan cacat data yang ditemukan** (tidak diperbaiki di sheet, hanya diakali di web):
+- Kolom `Total pengeluaran` (H) di sheet `REKAP KAS` kumulatifnya putus di baris ke-5
+  (60k → 90k → 165k → 594k → **161k**, seharusnya 755k).
+- Kolom `Pemasukan Per Bulan` (C) dan `TOTAL KAS MASUK` (D) diisi manual dan tidak konsisten
+  antar baris.
+- → **Keputusan:** website **tidak memakai kolom C, D, H, I**. Semua total dihitung ulang
+  di browser dari data mentah (centang `v` dan nominal pengeluaran). Angka di web jadi
+  selalu benar meski sheet-nya berantakan.
+
+---
+
+## 2026-08-03 · CP-02 — Stack & arsitektur
+
+**Keputusan: statis murni — HTML + CSS + JS vanilla. Tanpa build step, tanpa framework, tanpa backend.**
+
+Alasan: satu halaman, data kecil (28×12 sel), harus bisa di-host di GitHub Pages, dan user
+minta cepat. React/Vite di sini cuma menambah berat dan langkah deploy tanpa manfaat.
+
+**Alur data — tiga lapis, jatuh berurutan:**
+
+1. **Baca publik** lewat Google Visualization API
+   (`/gviz/tq?tqx=out:json&sheet=...`). Tidak perlu API key, tidak perlu login, asal
+   spreadsheet di-share "anyone with the link can view". Sudah diuji: `HTTP 200`, struktur terbaca.
+2. **Fallback `data/snapshot.json`** — hasil ekspor dari file `.xlsx`. Dipakai kalau sheet
+   di-private, offline, atau gviz down. Artinya web **tetap tampil benar walau belum dikonfigurasi apa pun**.
+3. **Tulis** lewat Google Sheets API v4 (`values.update` / `batchUpdate`) memakai OAuth
+   access token dari Google Identity Services. Hanya aktif di mode edit.
+
+**Ditolak — alternatif yang dipertimbangkan:**
+- *Google Apps Script sebagai proxy tulis* — repo referensi punya folder `apps-script/`.
+  Ditolak: menambah satu komponen yang harus di-deploy & di-maintain terpisah, dan
+  Apps Script Web App yang "execute as owner" justru membuat **siapa pun** bisa menulis
+  kalau URL-nya bocor. Menulis langsung dengan token si user lebih aman: Google sendiri
+  yang mengecek apakah orang itu punya izin edit.
+- *localStorage saja untuk mode edit* — ditolak, editan tidak terlihat orang lain,
+  jadi tidak menyelesaikan permintaan "input data yg tampil di web".
+- *Backend Node/Express* — ditolak, user minta statis.
+
+---
+
+## 2026-08-03 · CP-03 — Model keamanan login Gmail
+
+**Keputusan: whitelist email di `config.js` hanya untuk UX. Gerbang keamanan sesungguhnya
+adalah izin edit di Google Spreadsheet itu sendiri.**
+
+Ini penting dan mudah disalahpahami, jadi ditulis eksplisit: `ADMIN_EMAILS` ada di file
+JS yang bisa dibaca siapa saja. Orang bisa mengakalinya lewat DevTools dan memunculkan
+tombol edit. **Tapi tombol itu tidak akan berfungsi** — saat menyimpan, Google Sheets API
+menolak dengan 403 kecuali akun Google tersebut memang diberi akses Editor pada
+spreadsheet-nya.
+
+Jadi: whitelist = menyembunyikan tombol dari orang yang tidak berkepentingan.
+Sharing setting spreadsheet = keamanan yang sebenarnya. **Jangan share spreadsheet
+sebagai "Anyone with the link can edit".**
+
+Scope OAuth yang diminta: `openid email profile https://www.googleapis.com/auth/spreadsheets`.
+Token disimpan di memori saja (bukan localStorage) — hilang saat tab ditutup, mengurangi
+risiko token dicuri lewat XSS.
+
+---
+
+## 2026-08-03 · CP-04 — Desain: neo brutalism
+
+Token lengkap ada di `assets/css/style.css` (`:root`). Ringkasnya:
+
+| Aspek | Keputusan | Alasan |
+|---|---|---|
+| Border | `3px solid #0B0B0B` di semua kartu | Ciri utama neo brutalism |
+| Bayangan | Hard offset `6px 6px 0 #0B0B0B`, tanpa blur | Blur = soft/material, bukan brutalist |
+| Radius | `0` (kecuali pill pada badge) | Sudut tajam |
+| Warna | Kuning `#FFD84D` primer, lime/cyan/pink/oranye sebagai aksen blok | Kontras tinggi, ceria — cocok kelas 1 SD |
+| Font | `Archivo Black` (display) + `Space Grotesk` (teks) via Google Fonts, `display=swap` | Grotesk tebal khas brutalist; ada fallback sistem kalau font gagal dimuat |
+| Latar | `#FFFDF5` + grid halus | Menghindari putih klinis |
+| Hover | Kartu/tombol geser `-3px,-3px`, bayangan membesar | Efek "tombol fisik" |
+
+**Alasan memilih warna sebagai penanda status** (lunas/belum): warna saja tidak cukup
+untuk pengguna buta warna, jadi setiap sel juga punya **simbol** (`✓` / `·`) dan
+`aria-label` teks. Warna cuma lapisan kedua.
+
+---
+
+## 2026-08-03 · CP-05 — Animasi scroll
+
+**Keputusan: semua animasi hanya memakai `transform` dan `opacity`, durasi 400–700ms,
+dipicu `IntersectionObserver`.**
+
+Alasan: dua properti itu bisa dianimasikan GPU tanpa memicu layout/paint ulang. Wali murid
+kemungkinan besar membuka ini dari Android kelas menengah lewat WhatsApp — menganimasikan
+`height`, `top`, atau `box-shadow` akan terasa patah-patah di sana.
+
+Yang dianimasikan:
+- Reveal per seksi & per baris tabel (`translateY(28px)` → `0`), dengan stagger via `--d`.
+- Angka KPI count-up saat masuk viewport.
+- Bar chart tumbuh via `transform: scaleY()` — **bukan** `height`, supaya tidak reflow.
+- Marquee teks berjalan.
+- Progress bar scroll di atas layar.
+- Hero blob berputar mengikuti scroll (`requestAnimationFrame`, transform saja).
+
+`prefers-reduced-motion: reduce` mematikan semuanya dan menampilkan konten langsung —
+bukan sekadar mempercepat. Ini kebutuhan aksesibilitas nyata (vestibular disorder),
+bukan formalitas.
+
+**Ditolak:** library animasi (AOS, GSAP, Framer Motion). ~30 baris IntersectionObserver
+menggantikan 40KB+ JS pihak ketiga untuk kebutuhan sesederhana ini.
+
+---
+
+## 2026-08-03 · CP-06 — Utang teknis & batasan yang diketahui
+
+Ditulis jujur di sini dan di `README.md`, bukan didiamkan:
+
+1. **Login belum bisa dipakai sampai user mengisi `assets/js/config.js`** dengan OAuth
+   Client ID dari Google Cloud Console. Sebelum diisi, tombol edit menampilkan panduan,
+   bukan error. Mode baca tetap jalan normal.
+2. **Tidak ada riwayat perubahan / audit log** siapa mengubah apa. Kalau nanti perlu,
+   Google Sheets punya "Version history" bawaan sebagai penambal sementara.
+3. **Menulis satu sel = satu request.** Aman untuk skala ini (28×12). Kalau nanti kelasnya
+   banyak, perlu digabung jadi `values:batchUpdate`.
+4. **Tidak ada penguncian bersamaan.** Kalau dua bendahara mengedit bersamaan, yang
+   terakhir menyimpan menang. Risiko kecil untuk 1–2 pengguna.
+5. **Nama bulan pengeluaran diisi manual** lewat dropdown, tidak diturunkan dari tanggal —
+   karena sheet aslinya memang menyimpannya sebagai teks bebas.
+6. **Kolom C, D, H, I di sheet `REKAP KAS` akan makin tidak sinkron** dengan angka web,
+   karena web tidak menulis ke sana (lihat CP-01). Disengaja: web adalah sumber angka
+   yang benar, sheet adalah sumber data mentah.
+
+---
+
+## 2026-08-03 · CP-07 — Hasil QA & perbaikan yang lahir darinya
+
+Dijalankan sungguhan di browser pada 360 / 768 / 1440px, bukan diasumsikan. Empat cacat
+ditemukan dan diperbaiki:
+
+1. **Scroll horizontal 19px.** Pita marquee dimiringkan `rotate(-1deg) scale(1.03)`
+   sehingga sudutnya menonjol dan menambah lebar dokumen.
+   → Dibungkus `.marquee-wrap { overflow: hidden }`. Ditambah `overflow-x: clip` pada
+   `<html>` — sengaja `clip`, bukan `hidden`, karena `hidden` pada `<html>` akan
+   mematikan `position: sticky` pada nav.
+
+2. **Semua angka diam di Rp0.** `IntersectionObserver` sudah menembak elemen KPI saat
+   halaman pertama dimuat — waktu itu `data-count` masih `0` karena data dari Google
+   Sheet belum tiba. Elemen ditandai "sudah tampil" dan tidak pernah dianimasikan lagi.
+   → Atribut `data-count="0"` dihapus dari HTML, dan `setCount()` sekarang memeriksa:
+   kalau elemennya sudah terlihat, animasikan sekarang juga; kalau belum, serahkan ke observer.
+
+3. **Angka bisa tetap Rp0 walau data sudah ada.** Ini yang paling berbahaya karena
+   diam-diam: nilai benar hanya ditulis oleh animasi count-up, sedangkan count-up
+   memakai `requestAnimationFrame` — yang **dibekukan browser di tab latar belakang**,
+   dan juga tidak jalan saat halaman dicetak.
+   → **Nilai yang benar sekarang selalu ditulis ke DOM lebih dulu.** Count-up murni
+   hiasan di atasnya. Prinsipnya: animasi tidak boleh menjadi satu-satunya jalan
+   sebuah informasi sampai ke pengguna.
+
+4. **Target sentuh 40px** pada tombol `.btn--sm` di nav dan sel tabel `.cellbtn`.
+   → Dinaikkan ke 44px. Tabel jadi lebih tinggi, tapi sel itu memang bisa diklik di
+   mode edit jadi harus memenuhi ukuran minimum.
+
+**Terverifikasi setelah perbaikan:** 28 siswa terbaca live dari Google Sheet · 161
+pembayaran · Rp2.415.000 masuk · Rp755.000 keluar · saldo Rp1.660.000 (cocok dengan
+kolom `Net` di sheet) · snapshot cadangan menghasilkan angka identik · pencarian &
+filter benar · klik sel tanpa login tidak mengubah apa pun · tidak ada scroll
+horizontal di 360/768/1440 · tidak ada error di konsol.
+
+**Utang yang sengaja dibiarkan:** di layar ≤860px menu navigasi disembunyikan tanpa
+tombol hamburger pengganti. Alasan: halamannya satu layar panjang dan hero sudah punya
+dua tombol menuju bagian terpenting. Menambah menu geser untuk empat tautan pada
+halaman tunggal lebih banyak menambah kerumitan daripada manfaat. Kalau nanti bagiannya
+bertambah, ini yang pertama perlu ditinjau ulang.
+
+---
+
+## Cara menambah entri baru
+
+```markdown
+## YYYY-MM-DD · CP-NN — Judul singkat
+**Keputusan:** ...
+**Alasan:** ...
+**Konsekuensi / yang jadi terbatas:** ...
+```
