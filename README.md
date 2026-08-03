@@ -62,10 +62,38 @@ snapshot hanya jaring pengaman.
 
 ---
 
-## Mengaktifkan Mode Edit
+## Mode Edit — sudah aktif ✅
 
-Tanpa langkah ini halaman tetap berfungsi penuh dalam **mode baca**. Tombol "Mode Edit"
-akan menampilkan panduan, bukan error.
+Sudah dikonfigurasi, tidak perlu diulang. Ringkasnya:
+
+| Item | Nilai |
+|---|---|
+| Project Google Cloud | `kas-kelas-1b-al-huda` (pemilik: belvahector@gmail.com) |
+| Google Sheets API | Enabled |
+| Consent screen | External, status **Testing** |
+| Test user | `rahmapujirahayu309@gmail.com` |
+| Yang boleh login | `rahmapujirahayu309@gmail.com` saja |
+
+**Cara pakai:** buka https://kas-alhuda.my.id → klik **🔐 Mode Edit** → pilih akun
+`rahmapujirahayu309@gmail.com`. Google akan menampilkan peringatan *"Google hasn't verified
+this app"* — itu normal untuk aplikasi berstatus Testing; pilih **Advanced → Go to Kas
+Kelas 1B SD Islam Al Huda (unsafe)**. Setelah masuk, badge hijau muncul di kanan atas.
+
+- **Klik sel bulan** di tabel untuk mengubah lunas ⇄ belum — langsung tersimpan ke spreadsheet.
+- **Isi form "Catat Pengeluaran"** untuk menambah baris di sheet `REKAP KAS`.
+- Klik **Keluar** kalau selesai. Token tidak disimpan di browser.
+
+**Kalau menyimpan gagal dengan `403`:** akun `rahmapujirahayu309@gmail.com` belum punya
+akses **Editor** pada spreadsheet. Buka spreadsheet → **Share** → pastikan akun itu Editor
+(kalau dia pemiliknya, otomatis sudah). Jangan ubah *General access* menjadi Editor —
+biarkan **"Anyone with the link → Viewer"**.
+
+**Menambah admin lain:** dua tempat harus diubah, keduanya wajib —
+1. `ADMIN_EMAILS` di `assets/js/config.js`
+2. **Test users** di Google Cloud Console → Google Auth Platform → Audience
+
+<details>
+<summary>Panduan asli membuat OAuth dari nol (kalau nanti perlu membuat ulang)</summary>
 
 Sekali saja, ±5 menit:
 
@@ -91,6 +119,13 @@ ADMIN_EMAILS: ['bendahara1b@gmail.com'],
 ```
 
 7. Di Google Spreadsheet, **Share** → beri akun bendahara akses **Editor**.
+
+⚠️ Google Cloud Console **mengunduh file `client_secret_*.json` otomatis** setelah client
+dibuat, sering ke folder proyek. File itu berisi rahasia dan **tidak boleh masuk repo** —
+sudah dicegah lewat `.gitignore`, tapi periksa `git status` sebelum commit. Aplikasi ini
+tidak memakainya sama sekali; hanya Client ID yang dipakai, dan Client ID memang publik.
+
+</details>
 
 ### Cara pakai mode edit
 

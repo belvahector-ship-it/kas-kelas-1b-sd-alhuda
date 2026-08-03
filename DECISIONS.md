@@ -293,6 +293,60 @@ alamat lama.
 
 ---
 
+## 2026-08-03 · CP-10 — Kontak di halaman & mode edit diaktifkan
+
+**Penempatan kontak — keputusan user, dan alasannya masuk akal:**
+- **Kontak bendahara** (Rahma Puji Rahayu / Mama Shireen, WA 0811-3981-9222) diletakkan
+  sebagai **kartu besar di section terakhir**, bukan di footer. Alasannya: inilah tindakan
+  yang paling mungkin dibutuhkan wali murid setelah melihat tabel — orang jarang mencari
+  kontak di footer.
+- **Kredit & kontak pengelola web** (iBelva-Studios / Ayah Shireen, WA 0851-6321-0987,
+  BelvaFahrozi@unw.ac.id) diletakkan di **footer paling bawah dengan font kecil**, supaya
+  tidak bersaing dengan kontak bendahara.
+
+Link WhatsApp memakai `wa.me` dengan pesan siap-kirim (`?text=`) yang berbeda untuk
+masing-masing: wali murid membuka percakapan soal kas, pelapor bug membuka percakapan soal
+kendala teknis. Nomor `+62085163210987` yang diberikan formatnya campur (+62 dengan 0 di
+depan); dikonfirmasi ke user dan dibaca sebagai `0851-6321-0987` → `wa.me/6285163210987`.
+
+**Mode edit sekarang aktif.** Yang disiapkan di Google Cloud (project `kas-kelas-1b-al-huda`,
+dimiliki `belvahector@gmail.com`):
+
+| Item | Nilai |
+|---|---|
+| Google Sheets API | Enabled |
+| Consent screen | External, status **Testing** |
+| Test user | `rahmapujirahayu309@gmail.com` — satu-satunya |
+| Authorized JS origins | `kas-alhuda.my.id`, `www.kas-alhuda.my.id`, `belvahector-ship-it.github.io`, `localhost:8000` |
+| `ADMIN_EMAILS` | `rahmapujirahayu309@gmail.com` |
+
+**Sekarang ada tiga lapis penjaga, bukan satu** — ini kebetulan yang bagus dan sebaiknya
+dipertahankan:
+1. `ADMIN_EMAILS` di config — menyembunyikan tombol (kosmetik, bisa diakali).
+2. Consent screen berstatus **Testing** — Google menolak login akun yang tidak terdaftar
+   sebagai Test user, di sisi server. Ini lapisan yang **tidak** bisa diakali dari browser.
+3. Izin **Editor** di spreadsheet — penentu akhir apakah tulisan diterima.
+
+**Temuan penting soal kepemilikan spreadsheet:** akun `belvahector@gmail.com` ternyata hanya
+punya akses **View only** pada spreadsheet dan hanya bisa "Ask to share". Artinya pemiliknya
+orang lain — kemungkinan besar Bu Rahma sendiri, yang berarti dia sudah punya hak tulis
+penuh tanpa perlu perubahan apa pun. **Belum terverifikasi** karena tidak bisa dicek dari
+akun yang aksesnya terbatas. Kalau nanti muncul error `403` saat menyimpan, inilah yang
+pertama harus diperiksa.
+
+Akses umum spreadsheet saat ini: **"Anyone with the link → Viewer"** — tepat seperti yang
+dibutuhkan (web bisa membaca publik) dan aman (bukan Editor).
+
+**Insiden kecil yang perlu diingat:** saat OAuth client dibuat, Google Cloud Console
+**mengunduh file `client_secret_*.json` otomatis ke folder proyek**, dan file itu ikut
+tersapu `git add .`. Push ditolak GitHub push protection. File dipindahkan keluar repo ke
+`C:\Users\Shireen\Downloads\`, commit diulang, dan pola `client_secret*.json` ditambahkan ke
+`.gitignore`. Secret itu **tidak pernah terkirim ke GitHub**. Aplikasi ini tidak memakai
+client secret sama sekali — alur token di browser hanya butuh Client ID, yang memang
+dirancang untuk publik.
+
+---
+
 ## Cara menambah entri baru
 
 ```markdown
