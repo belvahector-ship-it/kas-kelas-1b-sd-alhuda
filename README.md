@@ -1,6 +1,9 @@
 # Kas Kelas 1B — SD Islam Al Huda
 
-🔗 **Situs:** https://belvahector-ship-it.github.io/kas-kelas-1b-sd-alhuda/
+🔗 **Situs:** https://kas-alhuda.my.id
+
+(Alamat lama `belvahector-ship-it.github.io/kas-kelas-1b-sd-alhuda/` tetap hidup dan
+otomatis dialihkan ke domain di atas.)
 
 Portal transparansi kas kelas: satu halaman, statis, membaca langsung dari Google
 Spreadsheet. Wali murid bisa mengecek status iuran anaknya tanpa login. Bendahara
@@ -74,11 +77,12 @@ Sekali saja, ±5 menit:
    yang kita mau.)
 4. **Credentials → Create Credentials → OAuth client ID** → tipe **Web application**.
 5. **Authorized JavaScript origins** — isi alamat situsnya, tanpa garis miring di akhir:
+   - `https://kas-alhuda.my.id` ← **yang utama**
    - `http://localhost:8000` (untuk mencoba di komputer)
-   - `https://belvahector-ship-it.github.io` (situs yang sudah online)
+   - `https://belvahector-ship-it.github.io` (alamat lama, kalau masih dipakai)
 
-   Isi **origin**-nya saja — tanpa `/kas-kelas-1b-sd-alhuda` dan tanpa garis miring
-   di akhir. Ini sering keliru dan menghasilkan error `redirect_uri_mismatch`.
+   Isi **origin**-nya saja — tanpa path dan tanpa garis miring di akhir. Ini sering
+   keliru dan menghasilkan error `redirect_uri_mismatch`.
 6. Salin **Client ID**, tempel ke `assets/js/config.js`:
 
 ```js

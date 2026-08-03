@@ -237,6 +237,48 @@ sopan yang dipatuhi Google dan Bing, bukan penguncian.
 
 ---
 
+## 2026-08-03 · CP-09 — Migrasi ke domain sendiri `kas-alhuda.my.id`
+
+**Keputusan:** situs dipindah dari `belvahector-ship-it.github.io/kas-kelas-1b-sd-alhuda/`
+ke **`https://kas-alhuda.my.id`** (domain milik sendiri di IDwebhost, aktif s/d 03/08/2027).
+Hosting tetap GitHub Pages — yang berubah hanya alamatnya.
+
+**DNS yang dipasang** (nameserver tetap `ns1/ns2.idwebhost.id`):
+
+| Host | Tipe | Nilai |
+|---|---|---|
+| `@` | A | `185.199.108.153` |
+| `@` | A | `185.199.109.153` |
+| `www` | CNAME | `belvahector-ship-it.github.io` |
+
+**Kenapa hanya 2 A record, bukan 4?** GitHub menganjurkan keempat IP-nya
+(`185.199.108–111.153`) untuk redundansi. Panel DNS IDwebhost menolak record ketiga
+dengan pesan *"A record having same details already exists"* — panelnya membatasi jumlah
+A record per host. Dua IP tetap berfungsi penuh karena masing-masing IP GitHub sudah
+anycast (satu alamat dilayani banyak lokasi), jadi yang hilang hanya lapisan cadangan
+kalau salah satu IP itu bermasalah. Risikonya kecil dan dampaknya bukan kehilangan data.
+Kalau nanti IDwebhost memperbaiki panelnya, tambahkan `.110.153` dan `.111.153`.
+
+**Jebakan panel IDwebhost yang perlu diingat** (memakan waktu paling lama saat migrasi):
+tombol **Simpan di dalam modal "Add DNS Record" tidak menyimpan ke server** — ia hanya
+menambahkan baris tersembunyi ke form `#form-dns` di halaman. Penyimpanan sesungguhnya
+terjadi saat form itu ter-submit. Akibatnya modal terlihat "tidak merespons" padahal
+record sebenarnya sudah masuk antrean, dan record bisa tersimpan tanpa pesan sukses.
+**Selalu muat ulang halaman Kelola DNS untuk melihat kondisi sebenarnya**, jangan percaya
+tampilan modal.
+
+**File `CNAME`** berisi `kas-alhuda.my.id` ditambahkan ke root repo. Ini yang memberi tahu
+GitHub Pages domain kustomnya. Sengaja disimpan sebagai file di repo, bukan hanya diatur
+lewat Settings → Pages, supaya pengaturannya ikut ter-versioning dan tidak hilang kalau
+Pages dinonaktifkan lalu diaktifkan lagi.
+
+**Konsekuensi yang harus diikuti:** `OAUTH_CLIENT_ID` di Google Cloud Console harus
+memasukkan `https://kas-alhuda.my.id` pada **Authorized JavaScript origins**. Kalau tidak,
+mode edit akan gagal dengan `redirect_uri_mismatch` di domain baru meski berhasil di
+alamat lama.
+
+---
+
 ## Cara menambah entri baru
 
 ```markdown
