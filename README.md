@@ -1,5 +1,7 @@
 # Kas Kelas 1B — SD Islam Al Huda
 
+🔗 **Situs:** https://belvahector-ship-it.github.io/kas-kelas-1b-sd-alhuda/
+
 Portal transparansi kas kelas: satu halaman, statis, membaca langsung dari Google
 Spreadsheet. Wali murid bisa mengecek status iuran anaknya tanpa login. Bendahara
 bisa masuk dengan akun Google untuk mencentang pembayaran dan mencatat pengeluaran.
@@ -73,7 +75,10 @@ Sekali saja, ±5 menit:
 4. **Credentials → Create Credentials → OAuth client ID** → tipe **Web application**.
 5. **Authorized JavaScript origins** — isi alamat situsnya, tanpa garis miring di akhir:
    - `http://localhost:8000` (untuk mencoba di komputer)
-   - `https://<username>.github.io` (kalau nanti dipasang di GitHub Pages)
+   - `https://belvahector-ship-it.github.io` (situs yang sudah online)
+
+   Isi **origin**-nya saja — tanpa `/kas-kelas-1b-sd-alhuda` dan tanpa garis miring
+   di akhir. Ini sering keliru dan menghasilkan error `redirect_uri_mismatch`.
 6. Salin **Client ID**, tempel ke `assets/js/config.js`:
 
 ```js
