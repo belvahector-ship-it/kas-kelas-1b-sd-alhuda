@@ -2,6 +2,13 @@
 *.xlsx
 *.xls
 
+# Kredensial OAuth. Google Cloud Console mengunduh file ini otomatis saat
+# OAuth client dibuat, dan pernah ikut tersapu "git add ." — ditahan oleh
+# push protection GitHub. Isinya client SECRET, yang tidak dipakai aplikasi
+# ini sama sekali (alur token di browser hanya butuh Client ID).
+client_secret*.json
+*credentials*.json
+
 # sampah OS & editor
 Thumbs.db
 desktop.ini

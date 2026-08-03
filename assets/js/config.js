@@ -25,7 +25,12 @@ window.CONFIG = {
   /* ---- Login Google (kosongkan kalau belum disiapkan) ----
      Cara membuatnya ada di modal "Mode Edit Belum Disiapkan" di halaman,
      atau di README.md bagian "Mengaktifkan Mode Edit".                     */
-  OAUTH_CLIENT_ID: '',
+  /* Project Google Cloud: "Kas Kelas 1B Al Huda" (kas-kelas-1b-al-huda),
+     dimiliki belvahector@gmail.com. Status publikasi "Testing", jadi hanya
+     akun yang terdaftar sebagai Test user yang bisa login.
+     Client ID aman berada di file publik — ia memang dirancang untuk terlihat.
+     Client secret TIDAK dipakai di sini dan tidak boleh masuk repo. */
+  OAUTH_CLIENT_ID: '761996099752-10g71vqr91tdgau6shgis4mmll6eeco7.apps.googleusercontent.com',
 
   /* Email yang boleh melihat tombol edit.
      PENTING: ini hanya untuk kerapian tampilan, BUKAN keamanan.
