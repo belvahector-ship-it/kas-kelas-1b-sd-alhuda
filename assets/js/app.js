@@ -334,7 +334,7 @@ function renderTableHead() {
   $('#theadRow').innerHTML =
     `<th class="sticky-l" scope="col">Nama Siswa</th>`
   + state.bulan.map(b => `<th scope="col">${b.slice(0, 3)}</th>`).join('')
-  + `<th scope="col">Lunas</th><th scope="col">Tunggakan</th>`;
+  + `<th scope="col">Lunas</th><th scope="col">Status</th>`;
 }
 
 function renderTableBody() {
